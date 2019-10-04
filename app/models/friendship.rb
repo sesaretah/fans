@@ -5,6 +5,12 @@ class Friendship < ApplicationRecord
   end
 
   def self.friend_ids(user)
-    Friendship.where('status = 1 AND (friend_id = ? OR user_id = ?)', user.id, user.id).pluck(:id).uniq
+    friendships = Friendship.where('status = 1 AND (friend_id = ? OR user_id = ?)', user.id, user.id)
+    result = []
+    for friendship in friendships
+      result << friendship.user_id if friendship.user_id != user.id
+      result << friendship.friend_id if friendship.friend_id != user.id
+    end
+    return result.uniq
   end
 end
