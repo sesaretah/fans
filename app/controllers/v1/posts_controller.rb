@@ -1,7 +1,8 @@
 class V1::PostsController < ApplicationController
   #before_action :authenticate_user!, only: [:create]
   def index
-    posts = Post.all
+    @friend_ids = Friendship.friend_ids(current_user)
+    posts = Post.where('user_id IN (?)', @friend_ids).order('created_at desc')
     render json: { data: posts, klass: 'Post', user: current_user.id  }, status: :ok
   end
 
@@ -13,7 +14,6 @@ class V1::PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id
-  #  @post.photo.attach(params[:photo])
     if @post.save
       render json: { data: @post, klass: 'Post' }, status: :ok
     end
