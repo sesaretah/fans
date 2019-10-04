@@ -51,3 +51,4 @@ gem 'mysql2',          '~> 0.4.4', :platform => :ruby
 gem "mini_magick"
 gem 'active_model_serializers'
 gem 'fast_jsonapi'
+gem 'thinking-sphinx'

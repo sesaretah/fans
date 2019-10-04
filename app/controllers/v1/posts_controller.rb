@@ -1,10 +1,11 @@
 class V1::PostsController < ApplicationController
-  #before_action :authenticate_user!, only: [:create]
+
   def index
     @friend_ids = Friendship.friend_ids(current_user)
     posts = Post.where('user_id IN (?)', @friend_ids).order('created_at desc')
-    render json: { data: posts, klass: 'Post', user: current_user.id  }, status: :ok
+    render json: { data: ActiveModel::SerializableResource.new(posts,  each_serializer: PostSerializer ).as_json, klass: 'Post' }, status: :ok
   end
+
 
   def show
       @post = Post.find(params[:id])
