@@ -2,7 +2,7 @@ class V1::FriendshipsController < ApplicationController
   def create
     @friendship = Friendship.new(friendship_params)
     @friendship.user_id = current_user.id
-    @friendship.status = 0
+    @friendship.status = 1
     if @friendship.save
       render json: { data: @friendship, klass: 'Friendship' }, status: :ok
     end
