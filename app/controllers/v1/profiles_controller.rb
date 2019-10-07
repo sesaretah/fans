@@ -16,7 +16,11 @@ class V1::ProfilesController < ApplicationController
 
   def my
     @profile = current_user.profile
-    render json: { data: ProfileSerializer.new(@profile).as_json, klass: 'Profile' }, status: :ok
+    if @profile
+      render json: { data: ProfileSerializer.new(@profile).as_json, klass: 'Profile' }, status: :ok
+    else
+      render json: { data: 'No profile', klass: 'Profile' }, status: :ok
+    end
   end
 
   def create
