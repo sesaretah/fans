@@ -4,11 +4,11 @@ class PostSerializer < ActiveModel::Serializer
   belongs_to :profile,  serializer: ProfileSerializer
 
   def transaction
-    if @options[:user_id]
-      object.transactions.where(sender_id: @options[:user_id]).first
+    if instance_options[:user_id]
+      object.transactions.where(sender_id: instance_options[:user_id]).first
     end
   end
-  
+
   def image_url
     if object.image.attached?
       rails_blob_url(object.image, only_path: true)
