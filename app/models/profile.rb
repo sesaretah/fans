@@ -19,7 +19,10 @@ class Profile < ApplicationRecord
   def friends_profiles
     profiles = []
     for user in Friendship.friends(self.user)
-      profiles << user.profile rescue nil
+      if user.profile
+        profiles << user.profile
+      end
     end
+    return profiles
   end
 end
