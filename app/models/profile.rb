@@ -15,4 +15,11 @@ class Profile < ApplicationRecord
   def wallet
     self.user.wallet.amount rescue 0
   end
+
+  def friends_profiles
+    profiles = []
+    for user in Friendship.friends(self.user)
+      profiles << user.profile rescue nil
+    end
+  end
 end

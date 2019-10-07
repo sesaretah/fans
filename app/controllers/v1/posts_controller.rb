@@ -9,14 +9,14 @@ class V1::PostsController < ApplicationController
 
   def show
       @post = Post.find(params[:id])
-      render json: { data:  PostSerializer.new(@post).as_json}, status: :ok
+      render json: { data:  PostSerializer.new(@post, user_id: current_user.id).as_json}, status: :ok
   end
 
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id
     if @post.save
-      render json: { data: @post, klass: 'Post' }, status: :ok
+      render json: { data: PostSerializer.new(@post).as_json, klass: 'Post' }, status: :ok
     end
   end
 

@@ -9,4 +9,5 @@ class Post < ApplicationRecord
   def profile
     self.user.profile
   end
+
 end

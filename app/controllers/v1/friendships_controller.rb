@@ -10,16 +10,24 @@ class V1::FriendshipsController < ApplicationController
 
   def accept
     @friendship = Friendship.where(friend_id: params[:friend_id], user_id: current_user.id).first
-    @friendship.status = 1
-    @friendship.save
-    render json: { data: @friendship, klass: 'Friendship' }, status: :ok
+    if !@friendship.blank?
+      @friendship.status = 1
+      @friendship.save
+      render json: { data: @friendship, klass: 'Friendship' }, status: :ok
+    else
+      render json: { data: 'Friendship Does Not exist!', klass: 'Friendship' }, status: :ok
+    end
   end
 
   def reject
     @friendship = Friendship.where(friend_id: params[:friend_id], user_id: current_user.id).first
-    @friendship.status = 2
-    @friendship.save
-    render json: { data: @friendship, klass: 'Friendship' }, status: :ok
+    if !@friendship.blank?
+      @friendship.status = 2
+      @friendship.save
+      render json: { data: @friendship, klass: 'Friendship' }, status: :ok
+    else
+      render json: { data: 'Friendship Does Not exist!', klass: 'Friendship' }, status: :ok
+    end
   end
 
   def destroy

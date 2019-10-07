@@ -1,7 +1,13 @@
 class PostSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :image_url, :blured_image_url, :video_url, :blured_video_url
+  attributes :id, :image_url, :blured_image_url, :video_url, :blured_video_url, :transaction
   belongs_to :profile,  serializer: ProfileSerializer
+
+  def transaction
+    if @options[:user_id]
+      object.transactions.where(sender_id: @options[:user_id]).first
+    end
+  end
   
   def image_url
     if object.image.attached?
