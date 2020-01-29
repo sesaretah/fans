@@ -12,7 +12,7 @@ class V1::TransactionsController < ApplicationController
   def create
     @transaction = Transaction.new(transaction_params)
     if @transaction.save
-      render json: { data: @transaction, klass: 'Transaction' }, status: :ok
+      render json: { data: TransactionSerializer.new(@transaction).as_json, klass: 'Transaction' }, status: :ok
     end
   end
 

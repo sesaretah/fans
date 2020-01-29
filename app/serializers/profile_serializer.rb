@@ -6,7 +6,7 @@ class ProfileSerializer < ActiveModel::Serializer
   belongs_to :wallet
 
   def is_friend
-    if scope[:user_id]
+    if scope && scope[:user_id]
       user = User.find(scope[:user_id])
       return user.is_friend(object.user)
     end

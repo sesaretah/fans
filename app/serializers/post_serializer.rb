@@ -4,9 +4,9 @@ class PostSerializer < ActiveModel::Serializer
   belongs_to :profile,  serializer: ProfileSerializer
 
   def transaction
-    if instance_options[:user_id]
+    if instance_options && instance_options[:user_id]
       object.transactions.where(sender_id: instance_options[:user_id]).first
-    elsif scope[:user_id]
+    elsif scope && scope[:user_id]
       object.transactions.where(sender_id: scope[:user_id]).first
     end
   end
