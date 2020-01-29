@@ -1,11 +1,13 @@
 class PostSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :image_url, :blured_image_url, :video_url, :blured_video_url, :thumb_url,:transaction
+  attributes :id, :created_at,:image_url, :blured_image_url, :video_url, :blured_video_url, :thumb_url,:transaction
   belongs_to :profile,  serializer: ProfileSerializer
 
   def transaction
     if instance_options[:user_id]
       object.transactions.where(sender_id: instance_options[:user_id]).first
+    elsif scope[:user_id]
+      object.transactions.where(sender_id: scope[:user_id]).first
     end
   end
 

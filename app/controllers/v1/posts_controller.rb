@@ -3,7 +3,7 @@ class V1::PostsController < ApplicationController
   def index
     @friend_ids = Friendship.friend_ids(current_user)
     posts = Post.where('user_id IN (?)', @friend_ids).order('created_at desc')
-    render json: { data: ActiveModel::SerializableResource.new(posts,  each_serializer: PostSerializer ).as_json, klass: 'Post' }, status: :ok
+    render json: { data: ActiveModel::SerializableResource.new(posts,  each_serializer: PostSerializer, scope: {user_id: current_user.id} ).as_json, klass: 'Post' }, status: :ok
   end
 
 

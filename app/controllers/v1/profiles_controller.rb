@@ -6,7 +6,7 @@ class V1::ProfilesController < ApplicationController
 
   def search
     profiles = Profile.search params[:q], star: true
-    render json: { data: ActiveModel::SerializableResource.new(profiles,  each_serializer: ProfileSerializer ).as_json, klass: 'Profile' }, status: :ok
+    render json: { data: ActiveModel::SerializableResource.new(profiles,  each_serializer: ProfileSerializer, scope: {user_id: current_user.id} ).as_json, klass: 'Profile' }, status: :ok
   end
 
   def show

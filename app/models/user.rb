@@ -16,4 +16,12 @@ class User < ApplicationRecord
   def email_changed?
     false
   end
+
+  def is_friend(user)
+    flag = false
+    for friend in Friendship.friends(self)
+      flag = true if friend.id == user.id
+    end
+    return flag
+  end
 end
