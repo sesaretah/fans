@@ -11,8 +11,10 @@ class V1::TransactionsController < ApplicationController
 
   def create
     @transaction = Transaction.new(transaction_params)
-    if @transaction.save
+    if @transaction.sender.wallet.amount >  0 && @transaction.save
       render json: { data: TransactionSerializer.new(@transaction).as_json, klass: 'Transaction' }, status: :ok
+    else
+      render json: { data: 'Empty Wallet', klass: 'Transaction' }, status: :ok
     end
   end
 
