@@ -1,9 +1,10 @@
 class ProfileSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
   attributes :id, :fullname, :bio, :number_of_friends, :avatar, :is_friend
-  has_many :posts,  serializer: PostSerializer
+  has_many :posts,  serializer: PostSerializer#, scope: {user_id: scope[:user_id]}
   belongs_to :user
   belongs_to :wallet
+
 
   def is_friend
     if scope && scope[:user_id]

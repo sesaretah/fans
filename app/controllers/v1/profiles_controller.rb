@@ -11,7 +11,7 @@ class V1::ProfilesController < ApplicationController
 
   def show
     @profile = Profile.find(params[:id])
-    render json: { data: {profile: ProfileSerializer.new(@profile).as_json, friends: ActiveModel::SerializableResource.new(@profile.friends_profiles,  each_serializer: ProfileSerializer, scope: {user_id: current_user.id} ).as_json}, klass: 'Profile' }, status: :ok
+    render json: { data: {profile: ProfileSerializer.new(@profile, scope: {user_id: current_user.id}).as_json, friends: ActiveModel::SerializableResource.new(@profile.friends_profiles,  each_serializer: ProfileSerializer, scope: {user_id: current_user.id} ).as_json}, klass: 'Profile' }, status: :ok
   end
 
   def my
