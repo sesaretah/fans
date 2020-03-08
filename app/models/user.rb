@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_one :profile
   has_one :wallet
   has_many :posts
+  has_many :pleadings
 
   def email_required?
     false
