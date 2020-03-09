@@ -1,4 +1,5 @@
 class Profile < ApplicationRecord
+  after_save ThinkingSphinx::RealTime.callback_for(:profile)
   has_one_attached :avatar
   belongs_to :user
 
