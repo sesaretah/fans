@@ -18,6 +18,7 @@ class V1::PleadingsController < ApplicationController
     @pleading = Pleading.find(params[:id])
     if !@pleading.blank?
       @pleading.user.wallet.amount += @pleading.amount
+      @pleading.user.wallet.save
       @pleading.destroy
       render json: { data: ActiveModel::SerializableResource.new(Pleading.all,  each_serializer: PleadingSerializer ).as_json, klass: 'Pleading' }, status: :ok       
     else
