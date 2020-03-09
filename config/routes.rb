@@ -9,7 +9,8 @@ Rails.application.routes.draw do
 
     get '/transactions/in', to: 'transactions#in'
     get '/transactions/out', to: 'transactions#out'
-    get '/pleadings/accept/:id', to: 'pleadings#accept'
+    get '/pleadings/accept', to: 'pleadings#accept'
+    get '/pleadings/reject', to: 'pleadings#reject'
 
     resources :profiles
     resources :posts
