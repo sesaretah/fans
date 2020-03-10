@@ -17,6 +17,9 @@ class V1::PleadingsController < ApplicationController
   def accept
     @pleading = Pleading.find(params[:id])
     if !@pleading.blank?
+      if @pleading.user.wallet.blank?
+        Wallet.new(user_id:  @pleading.user.id, amount: 0 )
+      end
       @pleading.user.wallet.amount += @pleading.amount
       @pleading.user.wallet.save
       @pleading.destroy
